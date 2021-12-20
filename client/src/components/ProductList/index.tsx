@@ -89,11 +89,6 @@ class ArticleList extends React.Component {
 
         return (
             <div className={'page'}>
-                <div className={'header'}>
-                    <strong>home24</strong>
-                    <input placeholder={'Search'} />
-                </div>
-
                 <div className={'sidebar'}>
                     <h3>Kategorien</h3>
                     {this.state.categories.length ? (
@@ -126,11 +121,6 @@ class ArticleList extends React.Component {
                         'Loading...'
                     )}
                     <div className={'articles'}>{articles}</div>
-                </div>
-
-                <div className={'footer'}>
-                    Alle Preise sind in Euro (€) inkl. gesetzlicher Umsatzsteuer
-                    und Versandkosten.
                 </div>
             </div>
         );

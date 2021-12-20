@@ -1,0 +1,15 @@
+@import './../../variables.scss';
+
+footer {
+    width: 100%;
+    min-height: 120px;
+    background-color: $shade-grey-light;
+    @include flex-row();
+    margin-top: 30px;
+
+    .content_box {
+        margin-left: 0;
+        transform: none;
+        text-align: center;
+    }
+}
