@@ -1,134 +1,77 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
-import { Category, Article } from './types';
-import './styles.css';
+import ArticleCard from './Card';
+import retrieveData from './../../api/retrievedata.api';
 
-var intlNumberFormatValues = ['de-DE', 'currency', 'EUR'];
-
-export var formatter = new Intl.NumberFormat(intlNumberFormatValues[0], {
-    style: intlNumberFormatValues[1],
-    currency: intlNumberFormatValues[2],
-});
+import { Category } from './types';
+import './styles.scss';
 
 type State = {
     categories: Category[];
 };
 
-export var ArticleCard = ({ article }: { article: Article }) => {
+const ArticleList = () => {
+    const [categories, setCategories] = useState<any>([]);
+
+    useEffect(() => {
+        retrieveData()
+            .then((response) => {
+                setCategories(response.data.categories);
+            })
+            .catch((d) => {
+                setCategories([]);
+            });
+    }, []);
+
+    const articles = categories.map((category: any) => {
+        return (
+            category &&
+            category.categoryArticles &&
+            category.categoryArticles.articles &&
+            category.categoryArticles.articles.map(
+                (article: any, index: number) => {
+                    return <ArticleCard key={index} article={article} />;
+                }
+            )
+        );
+    });
+
     return (
-        <div className={'article'}>
-            <img src={article.images[0].path} />
-            <div>{article.name}</div>
-            <div>{formatter.format(article.prices.regular.value / 100)}</div>
-            <section role='button'>Add to cart</section>
-        </div>
+        <section className='article_list_box content_box'>
+            <div className='sidebar'>
+                <h3>Kategorien</h3>
+                {categories.length ? (
+                    <ul>
+                        {categories[0].childrenCategories.map(
+                            (item: any, index: number) => {
+                                return (
+                                    <li key={index}>
+                                        <a href={`/${item.urlPath}`}>
+                                            {item.name}
+                                        </a>
+                                    </li>
+                                );
+                            }
+                        )}
+                    </ul>
+                ) : (
+                    'Loading...'
+                )}
+            </div>
+
+            <div className='content'>
+                {categories.length ? (
+                    <h1>
+                        {categories[0].name}
+                        <small> ({categories[0].articleCount})</small>
+                    </h1>
+                ) : (
+                    'Loading...'
+                )}
+                <div className='articles'>{articles}</div>
+            </div>
+        </section>
     );
 };
 
-class ArticleList extends React.Component {
-    state: State = {
-        categories: [],
-    };
-
-    componentDidMount() {
-        var xhr = new XMLHttpRequest();
-
-        xhr.open('POST', '/graphql');
-        xhr.setRequestHeader('Content-Type', 'application/json');
-
-        xhr.send(
-            JSON.stringify({
-                query: `{
-                categories(ids: "156126", locale: de_DE) {
-                  name
-                  articleCount
-                  childrenCategories {
-                    name
-                    urlPath
-                  }
-                  categoryArticles(first: 50) {
-                    articles {
-                      name
-                      variantName
-                      prices {
-                        currency
-                        regular {
-                          value
-                        }
-                      }
-                      images(
-                        format: WEBP
-                        maxWidth: 200
-                        maxHeight: 200
-                        limit: 1
-                      ) {
-                        path
-                      }
-                    }
-                  }
-                }
-              }`,
-            })
-        );
-
-        xhr.onload = () => {
-            if (xhr.status === 200) {
-                var response = JSON.parse(xhr.response);
-
-                this.setState({ categories: response.data.categories });
-            }
-        };
-    }
-
-    render() {
-        var articles = this.state.categories.map((category) => {
-            return category.categoryArticles.articles.map((article) => {
-                return <ArticleCard article={article} />;
-            });
-        });
-
-        return (
-            <div className={'page'}>
-                <div className={'sidebar'}>
-                    <h3>Kategorien</h3>
-                    {this.state.categories.length ? (
-                        <ul>
-                            {this.state.categories[0].childrenCategories.map(
-                                ({ name, urlPath }) => {
-                                    return (
-                                        <li>
-                                            <a href={`/${urlPath}`}>{name}</a>
-                                        </li>
-                                    );
-                                }
-                            )}
-                        </ul>
-                    ) : (
-                        'Loading...'
-                    )}
-                </div>
-
-                <div className={'content'}>
-                    {this.state.categories.length ? (
-                        <h1>
-                            {this.state.categories[0].name}
-                            <small>
-                                {' '}
-                                ({this.state.categories[0].articleCount})
-                            </small>
-                        </h1>
-                    ) : (
-                        'Loading...'
-                    )}
-                    <div className={'articles'}>{articles}</div>
-                </div>
-            </div>
-        );
-    }
-}
-
-var PLP = () => {
-    return <ArticleList />;
-};
-
-export default PLP;
+export default ArticleList;

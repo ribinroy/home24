@@ -10,11 +10,27 @@ header {
     padding: 10px 0;
     box-shadow: 0px 0px 10px $shade-grey;
     @include flex-row();
+    z-index: 9;
 
     .content_box {
         @include flex-row();
         justify-content: space-between;
         margin-left: 0;
         transform: none;
+
+        input.search_input {
+            width: 100%;
+            max-width: 270px;
+            padding: 8px 15px;
+            border-radius: 4px;
+            transition: max-width 0.3s;
+            border: 0px;
+            box-shadow: 0px 0px 4px $shade-grey;
+            outline: none;
+
+            &:focus {
+                max-width: 340px;
+            }
+        }
     }
 }

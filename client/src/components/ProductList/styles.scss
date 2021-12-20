@@ -1,0 +1,75 @@
+@import './../../variables.scss';
+
+.article_list_box {
+    @include flex();
+    justify-content: flex-start;
+    align-items: flex-start;
+
+    $sidebar-width: 260px;
+
+    .sidebar {
+        max-width: $sidebar-width;
+        padding-right: 30px;
+        width: 100%;
+        position: sticky;
+        top: $header-height;
+    }
+    .content {
+        width: calc(100% - #{$sidebar-width});
+
+        .articles {
+            display: grid;
+            grid-gap: 26px;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        }
+    }
+}
+
+.article {
+    border: 0px solid lavenderblush;
+    padding: 10px;
+    border-radius: 6px;
+    @include flex-column();
+    cursor: pointer;
+    justify-content: space-between;
+    overflow: hidden;
+    box-shadow: 0px 0px 10px $shade-grey-light;
+    transition: box-shadow 0.3s;
+
+    &:hover {
+        box-shadow: 0px 0px 10px $shade-grey-second;
+
+        img {
+            transform: scale(1.1);
+        }
+    }
+
+    img {
+        transition: transform 0.2s;
+        height: 70%;
+        margin-bottom: 15px;
+        border-radius: 6px;
+    }
+
+    .name {
+        width: 100%;
+        text-align: center;
+        margin-bottom: 5px;
+    }
+
+    button {
+        width: 100%;
+        padding: 9px 5px;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        margin-top: 5px;
+        transition: transform 0.1s;
+
+        &:hover {
+            &:active {
+                transform: scale(0.98);
+            }
+        }
+    }
+}

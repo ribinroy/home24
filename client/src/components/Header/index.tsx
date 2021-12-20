@@ -6,7 +6,7 @@ const Header = () => {
         <header>
             <div className='content_box'>
                 <div className='logo'>home24</div>
-                <input placeholder='Search' />
+                <input className='search_input' placeholder='Search' />
             </div>
         </header>
     );
