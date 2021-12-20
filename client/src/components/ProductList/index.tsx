@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
 import ArticleCard from './Card';
 import retrieveData from './../../api/retrievedata.api';
@@ -46,9 +47,9 @@ const ArticleList = () => {
                             (item: any, index: number) => {
                                 return (
                                     <li key={index}>
-                                        <a href={`/${item.urlPath}`}>
+                                        <Link to={`/${item.urlPath}`}>
                                             {item.name}
-                                        </a>
+                                        </Link>
                                     </li>
                                 );
                             }
