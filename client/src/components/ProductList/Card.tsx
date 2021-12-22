@@ -8,11 +8,23 @@ export const formatter = new Intl.NumberFormat(intlNumberFormatValues[0], {
     currency: intlNumberFormatValues[2],
 });
 
-const ArticleCard = ({ article }: { article: Article }) => {
+const ArticleCard = ({
+    article,
+    index,
+}: {
+    article: Article;
+    index: Nunmber;
+}) => {
     return (
-        <div className='article'>
+        <div
+            className='article'
+            data-aos='fade-up'
+            data-aos-offset='0'
+            data-aos-duration={300}>
             <img src={article.images[0].path} />
-            <div className='name'>{article.name}</div>
+            <div className='name' title={article.name}>
+                {article.name} {index}
+            </div>
             <div className='price'>
                 {formatter.format(article.prices.regular.value / 100)}
             </div>

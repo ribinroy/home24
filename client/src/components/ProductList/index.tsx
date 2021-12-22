@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 
 import ArticleCard from './Card';
 import retrieveData from './../../api/retrievedata.api';
+import Loader from './../Loader';
 
 import { Category } from './types';
 import './styles.scss';
@@ -13,6 +14,8 @@ type State = {
 
 const ArticleList = () => {
     const [categories, setCategories] = useState<any>([]);
+    const [categoryArticles, setCategoryArticles] = useState<any>([]);
+    const [searchKey, setSearchKey] = useState<string>('');
 
     useEffect(() => {
         retrieveData()
@@ -24,22 +27,41 @@ const ArticleList = () => {
             });
     }, []);
 
-    const articles = categories.map((category: any) => {
-        return (
-            category &&
-            category.categoryArticles &&
-            category.categoryArticles.articles &&
-            category.categoryArticles.articles.map(
-                (article: any, index: number) => {
-                    return <ArticleCard key={index} article={article} />;
-                }
-            )
+    useEffect(() => {
+        let newCategoriesArray = [];
+        categories.map((category: any) => {
+            newCategoriesArray = newCategoriesArray.concat(
+                category.categoryArticles.articles
+            );
+        });
+
+        debugger;
+        setCategoryArticles(
+            searchKey === ''
+                ? newCategoriesArray
+                : newCategoriesArray.filter(
+                      (el) => el.name.toLowerCase().indexOf(searchKey) > -1
+                  )
         );
-    });
+    }, [searchKey, categories]);
+
+    const debounce = (func, delay) => {
+        let debounceTimer;
+        return function () {
+            const context = this;
+            const args = arguments;
+            clearTimeout(debounceTimer);
+            debounceTimer = setTimeout(() => func.apply(context, args), delay);
+        };
+    };
 
     return (
         <section className='article_list_box content_box'>
-            <div className='sidebar'>
+            <div
+                className='sidebar'
+                data-aos='fade-right'
+                data-aos-offset='0'
+                data-aos-duration={300}>
                 <h3>Kategorien</h3>
                 {categories.length ? (
                     <ul>
@@ -56,20 +78,44 @@ const ArticleList = () => {
                         )}
                     </ul>
                 ) : (
-                    'Loading...'
+                    <Loader />
                 )}
             </div>
 
             <div className='content'>
                 {categories.length ? (
-                    <h1>
-                        {categories[0].name}
-                        <small> ({categories[0].articleCount})</small>
-                    </h1>
+                    <div className='top_details'>
+                        <h1
+                            data-aos='fade-left'
+                            data-aos-offset='0'
+                            data-aos-duration={300}>
+                            {categories[0].name}
+                            <small> ({categories[0].articleCount})</small>
+                        </h1>
+                        <input
+                            className='search_input'
+                            placeholder='Search'
+                            onChange={(e) =>
+                                setSearchKey(
+                                    e.currentTarget.value.toLowerCase()
+                                )
+                            }
+                        />
+                    </div>
                 ) : (
-                    'Loading...'
+                    <Loader />
                 )}
-                <div className='articles'>{articles}</div>
+                <div className='articles'>
+                    {categoryArticles.map((article: any, index: number) => {
+                        return (
+                            <ArticleCard
+                                key={index}
+                                index={index}
+                                article={article}
+                            />
+                        );
+                    })}
+                </div>
             </div>
         </section>
     );

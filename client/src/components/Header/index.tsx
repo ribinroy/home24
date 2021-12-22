@@ -5,12 +5,14 @@ import './styles.scss';
 
 const Header = () => {
     return (
-        <header>
+        <header
+            data-aos='fade-down'
+            data-aos-offset='0'
+            data-aos-duration={300}>
             <div className='content_box'>
                 <Link to='/'>
                     <Logo className='logo' />
                 </Link>
-                <input className='search_input' placeholder='Search' />
             </div>
         </header>
     );
