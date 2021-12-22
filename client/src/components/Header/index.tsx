@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { ReactComponent as Logo } from './../../assets/svg/logo.svg';
 import './styles.scss';
 
 const Header = () => {
@@ -7,7 +8,7 @@ const Header = () => {
         <header>
             <div className='content_box'>
                 <Link to='/'>
-                    <div className='logo'>home24</div>
+                    <Logo className='logo' />
                 </Link>
                 <input className='search_input' placeholder='Search' />
             </div>
