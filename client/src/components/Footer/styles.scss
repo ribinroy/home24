@@ -6,6 +6,8 @@ footer {
     background-color: $shade-grey-light;
     @include flex-row();
     margin-top: 30px;
+    z-index: 5;
+    position: relative;
 
     .content_box {
         margin-left: 0;
