@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "@types/aos": "^3.0.4"
+  }
+}

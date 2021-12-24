@@ -13,14 +13,14 @@ const ArticleCard = ({
     index,
 }: {
     article: Article;
-    index: Nunmber;
+    index: number;
 }) => {
     return (
         <div
             className='article'
             data-aos='fade-up'
             data-aos-offset='0'
-            data-aos-duration={300}>
+            data-aos-duration={index <= 10 ? (index + 1) * 100 : 400}>
             <img src={article.images[0].path} />
             <div className='name' title={article.name}>
                 {article.name} {index}

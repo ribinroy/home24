@@ -24,3 +24,11 @@ header {
         }
     }
 }
+
+@media screen and (max-width: $breakpoint-xs) {
+    header {
+        .content_box {
+            justify-content: center;
+        }
+    }
+}

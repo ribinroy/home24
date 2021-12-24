@@ -28,32 +28,21 @@ const ArticleList = () => {
     }, []);
 
     useEffect(() => {
-        let newCategoriesArray = [];
+        let newCategoriesArray: any = [];
         categories.map((category: any) => {
             newCategoriesArray = newCategoriesArray.concat(
                 category.categoryArticles.articles
             );
         });
 
-        debugger;
         setCategoryArticles(
             searchKey === ''
                 ? newCategoriesArray
                 : newCategoriesArray.filter(
-                      (el) => el.name.toLowerCase().indexOf(searchKey) > -1
+                      (el: any) => el.name.toLowerCase().indexOf(searchKey) > -1
                   )
         );
     }, [searchKey, categories]);
-
-    const debounce = (func, delay) => {
-        let debounceTimer;
-        return function () {
-            const context = this;
-            const args = arguments;
-            clearTimeout(debounceTimer);
-            debounceTimer = setTimeout(() => func.apply(context, args), delay);
-        };
-    };
 
     return (
         <section className='article_list_box content_box'>

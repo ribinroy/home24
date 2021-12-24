@@ -94,6 +94,7 @@
         height: 70%;
         margin-bottom: 15px;
         border-radius: 6px;
+        min-height: 200px;
     }
 
     .name {
@@ -120,6 +121,56 @@
         &:hover {
             &:active {
                 transform: scale(0.98);
+            }
+        }
+    }
+}
+
+@media screen and (max-width: $breakpoint-xs) {
+    .article_list_box {
+        justify-content: flex-start;
+        flex-direction: column;
+
+        .sidebar {
+            width: calc(100% + 20px);
+            position: relative;
+            top: 0;
+            margin-left: -10px;
+            max-width: 100% !important;
+            padding-right: 0;
+
+            ul {
+                @include flex-row();
+                width: 100%;
+                flex-wrap: wrap;
+                justify-content: flex-start;
+
+                li {
+                    margin: 0 15px;
+                    margin-bottom: 10px;
+                }
+            }
+
+            h3 {
+                margin-left: 15px;
+            }
+        }
+
+        .content {
+            width: 100%;
+
+            .top_details {
+                flex-direction: column;
+                align-items: flex-start;
+
+                h1 {
+                    margin-bottom: 15px;
+                }
+
+                .search_input {
+                    max-width: 100% !important;
+                    margin-bottom: 15px;
+                }
             }
         }
     }
