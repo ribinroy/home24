@@ -2,6 +2,8 @@
 
 .loader {
     @include flex-row();
+    width: 100%;
+    overflow: hidden;
 
     .lds-ripple {
         display: inline-block;

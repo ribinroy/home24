@@ -19,9 +19,10 @@ const App = () => {
             <Header />
             <main>
                 <Switch>
-                    <Route path='/'>
+                    <Route path='/' exact>
                         <ProductList />
                     </Route>
+                    <Route path='/kategorie/:type'></Route>
                 </Switch>
             </main>
             <Footer />
