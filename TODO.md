@@ -9,3 +9,5 @@
 5. API support for each category viz data retrieve should also be updated
 
 6. Sidebar should be taken out as a differnt component and used in the App level rather than in each component level
+
+7. Write unit test cases.
